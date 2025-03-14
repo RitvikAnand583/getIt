@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { TodoItem } from "@/components/TodoItem";
-import { Todo, User } from "@prisma/client";
+import { User,Todo } from "@prisma/client";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
