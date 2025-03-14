@@ -29,7 +29,7 @@ export async function POST() {
 
     return NextResponse.json({
       message: "Subscription successful",
-      subscriptionEnd: updatedUser.subscriptionEnds,
+      subscriptionEnds: updatedUser.subscriptionEnds,
     });
   } catch (error) {
     console.error("Error updating subscription:", error);
@@ -63,12 +63,12 @@ export async function GET() {
         where: { id: userId },
         data: { isSubscribed: false, subscriptionEnds: null },
       });
-      return NextResponse.json({ isSubscribed: false, subscriptionEnd: null });
+      return NextResponse.json({ isSubscribed: false, subscriptionEnds: null });
     }
 
     return NextResponse.json({
       isSubscribed: user.isSubscribed,
-      subscriptionEnd: user.subscriptionEnds,
+      subscriptionEnds: user.subscriptionEnds,
     });
   } catch (error) {
     console.error("Error fetching subscription status:", error);
