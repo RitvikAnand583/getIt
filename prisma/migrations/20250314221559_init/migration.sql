@@ -2,9 +2,8 @@
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "name" TEXT,
     "isSubscribed" BOOLEAN NOT NULL DEFAULT false,
-    "subscriptionEnd" TIMESTAMP(3),
+    "subscriptionEnds" TIMESTAMP(3),
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

@@ -181,10 +181,10 @@ export default function AdminDashboard() {
                 Subscription Status:{" "}
                 {user.isSubscribed ? "Subscribed" : "Not Subscribed"}
               </p>
-              {user.subscriptionEnd && (
+              {user.subscriptionEnds && (
                 <p>
                   Subscription Ends:{" "}
-                  {new Date(user.subscriptionEnd).toLocaleDateString()}
+                  {new Date(user.subscriptionEnds).toLocaleDateString()}
                 </p>
               )}
               <Button onClick={handleUpdateSubscription} className="mt-2">
