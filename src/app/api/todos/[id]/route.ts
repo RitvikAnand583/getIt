@@ -48,7 +48,7 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  content: any
+  content: { params: { id: string } }
 ) {
   const paramsId = content.params.id
   const { userId } = await auth();
