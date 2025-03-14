@@ -3,14 +3,15 @@ import { auth, clerkClient } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 
 const ITEMS_PER_PAGE = 10;
+const client = await clerkClient();
 
 async function isAdmin(userId: string) {
-  const user = await clerkClient.users.getUser(userId);
+  const user = await client.users.getUser(userId);
   return user.publicMetadata.role === "admin";
 }
 
 export async function GET(req: NextRequest) {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (!userId || !(await isAdmin(userId))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -43,14 +44,14 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ user, totalPages, currentPage: page });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: `Internal Server Error${error}` },
       { status: 500 }
     );
   }
 }
 
 export async function PUT(req: NextRequest) {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (!userId || !(await isAdmin(userId))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -65,7 +66,7 @@ export async function PUT(req: NextRequest) {
         where: { email },
         data: {
           isSubscribed,
-          subscriptionEnds: isSubscribed
+          subscriptionEnd: isSubscribed
             ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
             : null,
         },
@@ -85,14 +86,14 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ message: "Update successful" });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: `Internal Server Error,${error}` },
       { status: 500 }
     );
   }
 }
 
 export async function DELETE(req: NextRequest) {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (!userId || !(await isAdmin(userId))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -115,7 +116,7 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ message: "Todo deleted successfully" });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: `Internal Server Error,${error}` },
       { status: 500 }
     );
   }

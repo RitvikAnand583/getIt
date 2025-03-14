@@ -30,7 +30,7 @@ export default function SubscribePage() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to fetch subscription status. Please try again.",
+        description: `Failed to fetch subscription status. Please try again.${error}`,
         variant: "destructive",
       });
     } finally {

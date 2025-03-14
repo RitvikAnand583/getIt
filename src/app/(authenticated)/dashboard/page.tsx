@@ -47,7 +47,7 @@ export default function Dashboard() {
         setIsLoading(false);
         toast({
           title: "Error",
-          description: "Failed to fetch todos. Please try again.",
+          description: `Failed to fetch todos. Please try again.${error}`,
           variant: "destructive",
         });
       }
@@ -90,7 +90,7 @@ export default function Dashboard() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to add todo. Please try again.",
+        description: `Failed to add todo. Please try again.${error}`,
         variant: "destructive",
       });
     }
@@ -118,7 +118,7 @@ export default function Dashboard() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to update todo. Please try again.",
+        description: `Failed to update todo. Please try again.${error}`,
         variant: "destructive",
       });
     }
@@ -144,7 +144,7 @@ export default function Dashboard() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to delete todo. Please try again.",
+        description: `Failed to delete todo. Please try again.${error}`,
         variant: "destructive",
       });
     }

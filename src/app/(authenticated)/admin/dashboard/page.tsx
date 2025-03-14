@@ -42,7 +42,7 @@ export default function AdminDashboard() {
       } catch (error) {
         toast({
           title: "Error",
-          description: "Failed to fetch user data. Please try again.",
+          description: `Failed to fetch user data. Please try again.${error}`,
           variant: "destructive",
         });
       } finally {
@@ -86,7 +86,7 @@ export default function AdminDashboard() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to update subscription. Please try again.",
+        description: `Failed to update subscription. Please try again.${error}`,
         variant: "destructive",
       });
     }
@@ -113,7 +113,7 @@ export default function AdminDashboard() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to update todo. Please try again.",
+        description: `Failed to update todo. Please try again.${error}`,
         variant: "destructive",
       });
     }
@@ -136,7 +136,7 @@ export default function AdminDashboard() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to delete todo. Please try again.",
+        description: `Failed to delete todo. Please try again.${error}`,
         variant: "destructive",
       });
     }
@@ -181,10 +181,10 @@ export default function AdminDashboard() {
                 Subscription Status:{" "}
                 {user.isSubscribed ? "Subscribed" : "Not Subscribed"}
               </p>
-              {user.subscriptionEnds && (
+              {user.subscriptionEnd && (
                 <p>
                   Subscription Ends:{" "}
-                  {new Date(user.subscriptionEnds).toLocaleDateString()}
+                  {new Date(user.subscriptionEnd).toLocaleDateString()}
                 </p>
               )}
               <Button onClick={handleUpdateSubscription} className="mt-2">

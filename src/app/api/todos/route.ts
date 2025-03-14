@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 const ITEMS_PER_PAGE = 10;
 
 export async function GET(req: NextRequest) {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: `Internal Server Error.${error}` },
       { status: 500 }
     );
   }
@@ -60,8 +60,6 @@ export async function POST(req: NextRequest) {
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  console.log("here am i ");
-
 
   const user = await prisma.user.findUnique({
     where: { id: userId },

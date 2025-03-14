@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 
 export async function POST() {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -16,20 +16,20 @@ export async function POST() {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    const subscriptionEnds = new Date();
-    subscriptionEnds.setMonth(subscriptionEnds.getMonth() + 1);
+    const subscriptionEnd = new Date();
+    subscriptionEnd.setMonth(subscriptionEnd.getMonth() + 1);
 
     const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: {
         isSubscribed: true,
-        subscriptionEnds: subscriptionEnds,
+        subscriptionEnd: subscriptionEnd,
       },
     });
 
     return NextResponse.json({
       message: "Subscription successful",
-      subscriptionEnds: updatedUser.subscriptionEnds,
+      subscriptionEnd: updatedUser.subscriptionEnd,
     });
   } catch (error) {
     console.error("Error updating subscription:", error);
@@ -41,7 +41,7 @@ export async function POST() {
 }
 
 export async function GET() {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -50,7 +50,7 @@ export async function GET() {
   try {
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { isSubscribed: true, subscriptionEnds: true },
+      select: { isSubscribed: true, subscriptionEnd: true },
     });
 
     if (!user) {
@@ -58,17 +58,17 @@ export async function GET() {
     }
 
     const now = new Date();
-    if (user.subscriptionEnds && user.subscriptionEnds < now) {
+    if (user.subscriptionEnd && user.subscriptionEnd < now) {
       await prisma.user.update({
         where: { id: userId },
-        data: { isSubscribed: false, subscriptionEnds: null },
+        data: { isSubscribed: false, subscriptionEnd: null },
       });
-      return NextResponse.json({ isSubscribed: false, subscriptionEnds: null });
+      return NextResponse.json({ isSubscribed: false, subscriptionEnd: null });
     }
 
     return NextResponse.json({
       isSubscribed: user.isSubscribed,
-      subscriptionEnds: user.subscriptionEnds,
+      subscriptionEnd: user.subscriptionEnd,
     });
   } catch (error) {
     console.error("Error fetching subscription status:", error);
