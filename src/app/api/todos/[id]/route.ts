@@ -2,9 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 
+type RouteParams = {
+  params: {
+    [key: string]: string;
+  };
+};
+
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: RouteParams
 ) {
   const { userId } = await auth();
 
@@ -44,7 +50,7 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: RouteParams
 ) {
   const { userId } = await auth();
 
