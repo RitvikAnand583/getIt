@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma";
 
 export async function PUT(
   req: NextRequest,
-  content
+  content: { params: { id: string } }
 ) {
   const paramsId = content.params.id
 
@@ -48,7 +48,7 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  content
+  content: any
 ) {
   const paramsId = content.params.id
   const { userId } = await auth();
