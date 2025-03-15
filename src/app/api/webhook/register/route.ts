@@ -12,6 +12,8 @@ export async function POST(req: Request) {
     );
   }
 
+  console.log("Webhook received");
+  
   const headerPayload = await headers();
   const svix_id = headerPayload.get("svix-id");
   const svix_timestamp = headerPayload.get("svix-timestamp");
@@ -78,7 +80,7 @@ export async function POST(req: Request) {
       console.log("New user created:", newUser);
     } catch (error) {
       console.error("Error creating user in database:", error);
-      return new Response("Error creating user", { status: 500 });
+      return new Response("Error creating user", { status: 501 });
     }
   }
 

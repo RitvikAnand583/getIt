@@ -139,7 +139,7 @@ export default function SignUp() {
                 </Alert>
               )}
               <div id="clerk-captcha"></div>
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full cursor-pointer">
                 Sign Up
               </Button>
             </form>
